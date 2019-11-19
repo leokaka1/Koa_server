@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken')
 const keys = require('../../config/keys')
 //引入passport
 const passport = require('koa-passport')
+const validateRegisterInput = require('../../validation/register')
 
 /**
  * @route POST api/users/test
@@ -28,8 +29,16 @@ router.get('/test',async ctx=>{
 */
 router.post('/register',async ctx=>{
     // console.log(ctx.request.body)
+    // 验证
+    const {error,isValid} = validateRegisterInput(ctx.request.body);
+    //判断是否验证通过
+    if(!isValid){
+        ctx.status = 400;
+        ctx.body = error;
+        return;
+    }
     // 查找数据库中是否含有相同的email
-    const findResult =  await User.find({email:ctx.request.body.email})
+    const findResult =  await User.find({email:ctx.request.body.email});
     // console.log(findResult)
     if(findResult.length > 0){
         ctx.status = 500;
@@ -46,9 +55,9 @@ router.post('/register',async ctx=>{
         // 存入数据库
         await newUser.save().then(body=>{
             // 返回数据到页面
-            ctx.body = body
+            ctx.body = body;
         }).catch(error=>{
-            console.log(error)
+            console.log(error);
         })
     }
 })
