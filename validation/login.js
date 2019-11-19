@@ -11,33 +11,33 @@ module.exports = function validateRegisterInput(data){
     data.email = !isEmpty(data.email) ? data.email : ''
     data.password = !isEmpty(data.password) ? data.password : ''
 
-
+    console.log(data)
     // 验证名字
     if(!Validator.isLength(data.name,{min:2,max:30})){
          error.name = '名字长度不能少于2位并且不能高于30位'
     }
 
     // 
-    if(!Validator.isEmpty(data.name)){
+    if(Validator.isEmpty(data.name)){
         error.name = '名字不能为空'
     }
 
     // 验证邮箱
     if(!Validator.isEmail(data.email)){
-        error.name = '邮箱不合法'
+        error.email = '邮箱不合法'
     }
 
-    if(!Validator.isEmpty(data.email)){
-        error.name = '名字不能为空'
+    if(Validator.isEmpty(data.email)){
+        error.email = '邮箱不能为空'
     }
 
     //验证密码
     if(!Validator.isLength(data.password,{min:6,max:30})){
-        error.name = '密码长度不能少于2位并且不能高于30位'
+        error.password = '密码长度不能少于2位并且不能高于30位'
     }
 
-    if(!Validator.isEmpty(data.password)){
-        error.name = '密码不能为空'
+    if(Validator.isEmpty(data.password)){
+        error.password = '密码不能为空'
     }
 
     return{
