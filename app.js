@@ -1,17 +1,16 @@
 const Koa = require('koa');
+// Koa2路由
 const Router = require('koa-router');
+// 引入数据库框架mongoose
 const Mongoose = require('mongoose')
 //跨域
 var cors = require('koa2-cors');
-
 // config
 const Config = require('./config/keys')
 // 引入user用户模块
 const users = require('./routes/api/users')
 // 引入上传图片模块
 const images = require('./routes/api/imageupload')
-//跨域
-// const cors = require('koa-cors')
 // 引入body-parser接收参数
 const bodyParser = require('koa-bodyparser')
 // 引入验证工具passport
@@ -58,7 +57,6 @@ Mongoose.connect(
 router.get('/',async ctx=>{
     ctx.body = {msg:'hello koa interface'}
 })
-
 
 // 设置到端口号
 const port = process.env.PORT || 5000;

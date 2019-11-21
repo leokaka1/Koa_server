@@ -32,7 +32,7 @@ module.exports = function validateRegisterInput(data){
     }
 
     //验证密码
-    if(!Validator.isLength(data.password,{min:6,max:30})){
+    if(!Validator.isLength(data.password,{min:2,max:30})){
         error.password = '密码长度不能少于2位并且不能高于30位'
     }
 

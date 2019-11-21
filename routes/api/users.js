@@ -33,7 +33,7 @@ router.post('/register',async ctx=>{
     const {error,isValid} = validateRegisterInput(ctx.request.body);
     //判断是否验证通过
     if(!isValid){
-        ctx.status = 400;
+        // ctx.status = 400;
         ctx.body = error;
         return;
     }
@@ -41,9 +41,11 @@ router.post('/register',async ctx=>{
     const findResult =  await User.find({email:ctx.request.body.email});
     // console.log(findResult)
     if(findResult.length > 0){
-        ctx.status = 500;
+        // ctx.status = 500;
         ctx.body = {
-            "email":"邮箱已被占用"
+            "code":0,
+            "msg":"邮箱已被占用",
+            "data":{}
         }
     }else{
         //模型赋值
@@ -55,7 +57,10 @@ router.post('/register',async ctx=>{
         // 存入数据库
         await newUser.save().then(body=>{
             // 返回数据到页面
-            ctx.body = body;
+            ctx.body = {
+                "code":1,
+                "data":body
+            };
         }).catch(error=>{
             console.log(error);
         })
